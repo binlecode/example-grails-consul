@@ -14,8 +14,8 @@ ext {
     springCloudVersion = "1.2.1.RELEASE"
 }
 
-version "0.1"
-group "example.grails323.service"
+//version "0.1"   // use parent build.gradle version
+group "example.grails.consul"
 
 apply plugin:"eclipse"
 apply plugin:"idea"

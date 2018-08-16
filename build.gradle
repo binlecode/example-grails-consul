@@ -6,6 +6,10 @@
  * user guide available at https://docs.gradle.org/3.5/userguide/tutorial_java_projects.html
  */
 
+subprojects {
+    version = '0.2'
+}
+
 /*
 // Apply the java plugin to add support for Java
 apply plugin: 'java'

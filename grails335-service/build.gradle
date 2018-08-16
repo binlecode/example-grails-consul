@@ -10,8 +10,8 @@ buildscript {
     }
 }
 
-version "0.1"
-group "example.grails335.service"
+//version "0.1"  // use parent build.gradle version
+group "example.grails.consul"
 
 apply plugin:"eclipse"
 apply plugin:"idea"
