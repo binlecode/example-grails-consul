@@ -1,4 +1,4 @@
-package test.g323.consul
+package test.grails323.service
 
 import com.ecwid.consul.v1.ConsulClient
 import com.ecwid.consul.v1.QueryParams

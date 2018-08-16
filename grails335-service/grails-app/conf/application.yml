@@ -2,7 +2,7 @@
 grails:
     profile: web
     codegen:
-        defaultPackage: test.g335.consul
+        defaultPackage: test.grails335.service
     gorm:
         reactor:
             # Whether to translate GORM events into Reactor events
@@ -25,6 +25,9 @@ endpoints:
     enabled: true
     jmx:
         enabled: true
+
+server:
+    port: 8091
 
 ---
 grails:
@@ -132,4 +135,4 @@ environments:
 # spring cloud integration
 spring:
     application:
-        name: test-g335-consul  # cloud discovery service name
+        name: grails335-service  # cloud discovery service name

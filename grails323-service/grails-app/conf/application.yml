@@ -2,7 +2,7 @@
 grails:
     profile: web
     codegen:
-        defaultPackage: test.g323.consul
+        defaultPackage: test.grails323.service
     spring:
         transactionManagement:
             proxies: false
@@ -26,7 +26,7 @@ spring:
     #  - port is ${server.port}
     #
     application:
-        name: test-g323-consul
+        name: grails323-service
     cloud:
         consul:
 #            host: localhost

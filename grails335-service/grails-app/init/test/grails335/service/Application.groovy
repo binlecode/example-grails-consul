@@ -1,4 +1,4 @@
-package test.g335.consul
+package test.grails335.service
 
 import grails.boot.GrailsApp
 import grails.boot.config.GrailsAutoConfiguration

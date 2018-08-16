@@ -1,4 +1,4 @@
-package test.g323.consul
+package test.grails335.service
 
 class BootStrap {
 

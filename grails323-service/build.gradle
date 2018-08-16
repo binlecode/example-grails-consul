@@ -10,8 +10,12 @@ buildscript {
     }
 }
 
+ext {
+    springCloudVersion = "1.2.1.RELEASE"
+}
+
 version "0.1"
-group "example.grails323.consul"
+group "example.grails323.service"
 
 apply plugin:"eclipse"
 apply plugin:"idea"
@@ -54,9 +58,13 @@ dependencies {
     testRuntime "org.seleniumhq.selenium:selenium-htmlunit-driver:2.47.1"
     testRuntime "net.sourceforge.htmlunit:htmlunit:2.18"
 
-    // for Grails 3.2.x can only work with 1.2.1 GA version of consul support, and an overridden ConsulHealthIndicator
-    // to prevent null-pointer exception in health check endpoint call
-    compile(group: 'org.springframework.cloud', name: 'spring-cloud-starter-consul-all', version: '1.2.1.RELEASE')
+    // Grails 3.2.x can only work with 1.2.1 GA version of consul support,
+    // and an overridden ConsulHealthIndicator is injected to prevent null-pointer
+    // exception in health check endpoint call.
+    compile("org.springframework.cloud:spring-cloud-starter-consul-all:$springCloudVersion")
+    // must include to support feign client auto instantiation from interface definition
+    // otherwise will get exception of java.lang.NoClassDefFoundError: feign/Feign$Builder
+    compile("org.springframework.cloud:spring-cloud-starter-feign:$springCloudVersion")
 }
 
 bootRun {
