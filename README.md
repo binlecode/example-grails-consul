@@ -84,6 +84,7 @@ To run consul locally, simply do:
 consul agent -dev
 ```
 This consul server is running in dev mode, which is useful for bringing up a single-node Consul environment quickly and easily with default settings such as port 8500.
+Check [this page](https://www.consul.io/intro/getting-started/agent.html) for basic consul shell commands.
 
 #### Option 2 - run consul as docker container 
 
@@ -132,9 +133,21 @@ The service client is based on ```FeignClient``` with client-side load balancing
 By calling ```grails323-service/greet?name=<some-name>``` multiple times you will find the response shows port number keeps changing between 8190 and 8290 from cloud service.
 And, if one grails335-service node is shut down, all responses will only come from the other port. 
 
-#### Service fail-over based on Hystrix
+#### Service fail-over based on circuit breaker with Hystrix
 
-//todo: add code example and documentation here (as release v0.3)
+Feign client has circuit breaker functionality built-in basd on Hystrix. Only one property in ```application.yml``` is needed to enable it.
+```yaml
+feign:
+    hystrix:
+        enabled: true
+```
+
+With hystrix enabled, the ```@FeignClient``` annotation can support ```fallback``` method to use a fail-over class that implements the annotated interface. 
+In grails323-service application, such a class is defined as a backup for greet client call when grails3350-service endpoint is down.
+
+Shut down all grails335-service nodes, and try calling ```grails323-service/hello/greet``` again, you will receive failover response instead. 
+
+Note in Grails, a spring bean is registered in ```grails-app/conf/resources.groovy``` file, not by ```@Component``` annotation as in pure Spring framework. 
 
 ## CONSUL HOUSEKEEPING
 
@@ -150,6 +163,9 @@ http://localhost:8500/v1/agent/service/deregister/<obsolete-service-id>
 ```
 
 ## CHANGELOG
+
+#### v0.3
+* add Feign client Hystrix failover example
 
 #### v0.2
 * add Feign client example for service discovery and remote call

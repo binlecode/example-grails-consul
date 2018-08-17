@@ -17,29 +17,7 @@ spring:
     groovy:
         template:
             check-template-location: false
-    # spring cloud consul integration settings
-    #
-    # By default, taken from the Environment:
-    #  - service name is ${spring.application.name}
-    #  - instance id is the Spring Context ID, which by default is
-    #    ${spring.application.name}:comma,separated,profiles:${server.port}
-    #  - port is ${server.port}
-    #
-    application:
-        name: grails323-service
-    cloud:
-        consul:
-#            host: localhost
-#            port: 8500
-#            discovery:
-#                health-check-path: /health
-#                healthCheckInterval: 5s
-            ## To enable consul distributed configuration:
-            ## We can create the property by going to the “KEY/VALUE” section,
-            ## then entering “/config/test-g323-consul/my/prop” in the “Create Key” form
-            ## and “Hello Consul” as value. Then click the “Create” button to save.
-            config:
-                enabled: true
+
 
 # Spring Actuator Endpoints should be enabled for consul health check
 endpoints:
@@ -169,3 +147,33 @@ environments:
                 testOnReturn: false
                 jdbcInterceptors: ConnectionState
                 defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
+
+
+# spring cloud consul integration settings
+---
+spring:
+    # By default, taken from the Environment:
+    #  - service name is ${spring.application.name}
+    #  - instance id is the Spring Context ID, which by default is
+    #    ${spring.application.name}:comma,separated,profiles:${server.port}
+    #  - port is ${server.port}
+    #
+    application:
+        name: grails323-service
+    cloud:
+        consul:
+#            host: localhost
+#            port: 8500
+#            discovery:
+#                health-check-path: /health
+#                healthCheckInterval: 5s
+            ## To enable consul distributed configuration:
+            ## We can create the property by going to the “KEY/VALUE” section,
+            ## then entering “/config/test-g323-consul/my/prop” in the “Create Key” form
+            ## and “Hello Consul” as value. Then click the “Create” button to save.
+            config:
+                enabled: true
+# enable hystrix in feign client
+feign:
+    hystrix:
+        enabled: true

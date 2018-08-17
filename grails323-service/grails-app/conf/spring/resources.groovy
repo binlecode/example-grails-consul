@@ -1,9 +1,9 @@
-import test.grails323.service.GreetClientFeign
+import test.grails323.service.GreetClientFailover
 
 // Place your Spring DSL code here
 beans = {
 
-    // register Feign client singleton bean
-//    greetClientFeign(GreetClientFeign)
+    // register singleton feign client hysrtrix bean for failover
+    greetClientFailover(GreetClientFailover)
 
 }
