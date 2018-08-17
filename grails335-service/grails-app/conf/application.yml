@@ -136,3 +136,12 @@ environments:
 spring:
     application:
         name: grails335-service  # cloud discovery service name
+    cloud:
+        consul:
+            host: localhost
+            port: 8500
+            discovery:
+#                healthCheckPath: /health
+                health-check-url: http://grails335-service:${server.port}/health
+                healthCheckInterval: 5s  # default 15s, use 5s to increase frequency for dev refresh
+#                instanceId: grails335-service:${server.port}

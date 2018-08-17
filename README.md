@@ -35,10 +35,58 @@ This example assumes the running consul server agent registers the corresponding
 
 #### service discovery
 
-TBD
+In Grails application check ```grails-app/conf/application.yml``` file for consul specific settings.
+For example, for grails323-service:
+
+```yaml
+spring:
+    # spring cloud consul integration settings
+    # By default, taken from the Environment:
+    #  - service name is ${spring.application.name}
+    #  - instance id is the Spring Context ID, which by default is
+    #    ${spring.application.name}:comma,separated,profiles:${server.port}
+    #  - port is ${server.port}
+    application:
+        name: grails323-service
+    cloud:
+        consul:
+#            host: localhost
+#            port: 8500
+#            discovery:
+#                health-check-path: /health
+#                healthCheckInterval: 15s
+            ## To enable consul distributed configuration:
+            ## We can create the property by going to the “KEY/VALUE” section,
+            ## then entering “/config/test-g323-consul/my/prop” in the “Create Key” form
+            ## and “Hello Consul” as value. Then click the “Create” button to save.
+            config:
+                enabled: true
+```
 
 ## PREREQUISITES
-For this example, a locally running docker stock Consul container should be sufficient. 
+For this example, a locally running Consul should be running on default port 8500
+
+#### Option 1 - install consul binary to hosting OS
+
+This depends on your OS, but the [process is simple](https://www.consul.io/intro/getting-started/install.html).
+
+For MacOS, the recommended way is install via [homebrew](https://brew.sh/).
+
+```bash
+# check consul bottle info in homebrew
+brew info consul
+# install
+brew install consul
+```
+
+To run consul locally, simply do:
+```bash
+consul agent -dev
+```
+This consul server is running in dev mode, which is useful for bringing up a single-node Consul environment quickly and easily with default settings such as port 8500.
+
+#### Option 2 - run consul as docker container 
+
 Make sure docker is installed. To start a consul container:
 ```bash
 docker run -d -p 8500:8500 --name dev-consul consul
@@ -53,18 +101,12 @@ or even for runtime resource details:
 docker stats dev-consul
 ```
 
-## CONFIGURATION
-
-
-In Grails application check ```grails-app/conf/application.yml``` file for consul specific settings.
-
-```yaml
-
-```
 
 ## INSTALL
 
 Check out this code repo.
+
+#### Simple node service discovery
 
 The simple way of running both service nodes with consul
 ```bash
@@ -73,8 +115,26 @@ The simple way of running both service nodes with consul
 ```
 As defined in ```application.yml```, the services are running on port 8090 and 8091 respectively. Change to other values as needed.
 
-//todo: add example and jar command to run multiple nodes with profile specific ports
+#### Service discovery with node cluster
 
+Based on SpringBoot profile support, Grails support per environment configuration with JVM option ```-Dgrails.env```.
+The grails335-service supports two additional custom environment ```p8190``` and ```p8290``` for custom ports (8190 and 8290), so that a cluster of two nodes can be registered to consul under same service ```grails335-service```.  
+
+```bash
+# run these two gradle command in two separate terminals
+./gradlew :grails355-service:bootRun -Dgrails.env=p8190
+./gradlew :grails355-service:bootRun -Dgrails.env=p8290
+```
+
+The grails323-service now works as a service client to call endpoint ```grails335-service/hello/greet?name=<some-name>```.
+The service client is based on ```FeignClient``` with client-side load balancing built-in. 
+
+By calling ```grails323-service/greet?name=<some-name>``` multiple times you will find the response shows port number keeps changing between 8190 and 8290 from cloud service.
+And, if one grails335-service node is shut down, all responses will only come from the other port. 
+
+#### Service fail-over based on Hystrix
+
+//todo: add code example and documentation here (as release v0.3)
 
 ## CONSUL HOUSEKEEPING
 
@@ -83,6 +143,7 @@ As defined in ```application.yml```, the services are running on port 8090 and 8
 curl --request GET http://localhost:8500/v1/agent/services
 ```
 
+#### de-register a service
 ```bash
 curl --request PUT \
 http://localhost:8500/v1/agent/service/deregister/<obsolete-service-id>

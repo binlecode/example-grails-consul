@@ -1,0 +1,8 @@
+server:
+    port: 8190
+#spring:
+#    cloud:
+#        consul:
+#            discovery:
+#                instanceId: grails335-service:${server.port}
+#
