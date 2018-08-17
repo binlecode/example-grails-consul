@@ -1,3 +1,6 @@
-*-service/grails-app/assets/javascripts/* linguist-vendored
-*-service/grails-app/assets/javascripts/* linguist-vendored
-*-service/grails-app/assets/images/* linguist-vendored
+grails323-service/grails-app/assets/javascripts/* linguist-vendored
+grails335-service/grails-app/assets/javascripts/* linguist-vendored
+grails323-service/grails-app/assets/javascripts/* linguist-vendored
+grails335-service/grails-app/assets/javascripts/* linguist-vendored
+grails323-service/grails-app/assets/images/* linguist-vendored
+grails335-service/grails-app/assets/images/* linguist-vendored
