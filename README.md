@@ -113,7 +113,7 @@ The simple way of running both service nodes with consul
 ```
 As defined in ```application.yml```, the services are running on port 8090 and 8091 respectively. Change to other values as needed.
 
-#### Service discovery with node cluster
+#### Service node cluster and client-side load balancing
 
 Based on SpringBoot profile support, Grails support per environment configuration with JVM option ```-Dgrails.env```.
 The grails335-service supports two additional custom environment ```p8190``` and ```p8290``` for custom ports (8190 and 8290), so that a cluster of two nodes can be registered to consul under same service ```grails335-service```.  
