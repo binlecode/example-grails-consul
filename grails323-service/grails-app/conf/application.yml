@@ -180,3 +180,7 @@ spring:
 feign:
     hystrix:
         enabled: true
+
+### application specific settings
+app:
+    greetServiceName: grails335-service
