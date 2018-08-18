@@ -9,11 +9,14 @@ class HelloController {
     @Autowired
     GreetClientFeign greetClientFeign
 
-    @Value('${my.prop:nice-consul}')  // default to 'nice-consul' if not configured in consul config server
-    String myProp
+    /**
+     * look up consul config store for key path: config/grails323-service/hello/name
+     */
+    @Value('${hello.name:nice-consul}')  // default to 'nice-consul' if not configured in consul config server
+    String name
 
     def index(String name) {
-        render "hello to: ${name ?: 'consul default name: ' + myProp}"
+        render "hello to: ${name ?: 'consul default name: ' + this.name}"
     }
 
     def greet(String name) {

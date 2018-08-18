@@ -169,11 +169,14 @@ spring:
 #                healthCheckInterval: 5s
             ## To enable consul distributed configuration:
             ## We can create the property by going to the “KEY/VALUE” section,
-            ## then entering “/config/test-g323-consul/my/prop” in the “Create Key” form
-            ## and “Hello Consul” as value. Then click the “Create” button to save.
+            ## then entering “/config/grails323-service/hello/name” in the “Create Key” form
+            ## and “Consul-KV-Name” as value. Then click the “Create” button to save.
             config:
                 enabled: true
-# enable hystrix in feign client
+#                prefix: configuration  # default to 'config'
+#                defaultContext: apps   # default to service name
+#                profileSeparator: '::' # default to ','
+# enable hystrix in feign client, Feign will wrap all client methods with a circuit breaker
 feign:
     hystrix:
         enabled: true

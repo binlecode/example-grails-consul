@@ -56,9 +56,6 @@ spring:
 #                health-check-path: /health
 #                healthCheckInterval: 15s
             ## To enable consul distributed configuration:
-            ## We can create the property by going to the “KEY/VALUE” section,
-            ## then entering “/config/test-g323-consul/my/prop” in the “Create Key” form
-            ## and “Hello Consul” as value. Then click the “Create” button to save.
             config:
                 enabled: true
 ```
@@ -162,7 +159,23 @@ curl --request PUT \
 http://localhost:8500/v1/agent/service/deregister/<obsolete-service-id>
 ```
 
+## DISTRIBUTED CONFIGURATION
+
+To load a key-value pair to consul KV store:
+```bash
+consul kv put config/grails323-service/hello/name "Consul-KV-Name"
+```
+the key above corresponds grails323-service application ```HelloController```'s spring ```@Value``` annotation with value ```hello.name```.
+
+This key value pair can be removed by:
+```bash
+consul kv delete config/grails323-service/hello/name
+```
+
 ## CHANGELOG
+
+#### v0.4
+* add basic consul distributed configuration property support
 
 #### v0.3
 * add Feign client Hystrix failover example
@@ -174,7 +187,6 @@ http://localhost:8500/v1/agent/service/deregister/<obsolete-service-id>
 #### v0.1
 * simple settings to work with localhost consul agent
 * custom ConsulHealthIndicator
-* basic consul distributed configuration property support
 
 
 ## CONTRIBUTORS
